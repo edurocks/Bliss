@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/emojiUserFragment">
 
+    <fragment
+        android:id="@+id/emojiUserFragment"
+        android:name="com.example.bliss.ui.EmojiUserFragment"
+        android:label="fragment_emoji_user"
+        tools:layout="@layout/fragment_emoji_user" >
+        <action
+            android:id="@+id/action_emojiUserFragment_to_emojiListFragment"
+            app:destination="@id/emojiListFragment" />
+        <action
+            android:id="@+id/action_emojiUserFragment_to_avatarListFragment"
+            app:destination="@id/avatarListFragment" />
+        <action
+            android:id="@+id/action_emojiUserFragment_to_googleReposFragment"
+            app:destination="@id/googleReposFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/emojiListFragment"
+        android:name="com.example.bliss.ui.EmojiListFragment"
+        android:label="fragment_emoji_list"
+        tools:layout="@layout/fragment_emoji_list" />
+    <fragment
+        android:id="@+id/avatarListFragment"
+        android:name="com.example.bliss.ui.AvatarListFragment"
+        android:label="fragment_avatar_list"
+        tools:layout="@layout/fragment_avatar_list" />
+    <fragment
+        android:id="@+id/googleReposFragment"
+        android:name="com.example.bliss.ui.GoogleReposFragment"
+        android:label="fragment_google_repos"
+        tools:layout="@layout/fragment_google_repos" />
 </navigation>
