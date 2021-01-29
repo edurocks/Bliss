@@ -7,7 +7,7 @@ import com.example.bliss.database.entity.EmojiEntity
 import com.example.bliss.databinding.EmojiRowBinding
 import com.squareup.picasso.Picasso
 
-class EmojiAdapter(private val emojiList : ArrayList<EmojiEntity>,
+class EmojiAdapter(private val emojiList: ArrayList<EmojiEntity>,
                    private val emojiClickListener: emojiRowClickListener)
 : RecyclerView.Adapter<EmojiAdapter.EmojiHolder>() {
 
@@ -29,8 +29,20 @@ class EmojiAdapter(private val emojiList : ArrayList<EmojiEntity>,
         holder.bind(emoji)
 
         holder.itemView.setOnClickListener {
-            emojiClickListener.onEmojiClickListener(position, emoji)
+            emojiClickListener.onEmojiClickListener(holder.bindingAdapterPosition, emoji)
         }
+    }
+
+    fun restoreList(list : ArrayList<EmojiEntity>){
+        emojiList.clear()
+        emojiList.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun removeAt(position: Int) {
+        emojiList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, emojiList.size)
     }
 
     override fun getItemCount(): Int {
@@ -38,6 +50,6 @@ class EmojiAdapter(private val emojiList : ArrayList<EmojiEntity>,
     }
 
     interface emojiRowClickListener {
-        fun onEmojiClickListener(position : Int, emoji: EmojiEntity)
+        fun onEmojiClickListener(position: Int, emoji: EmojiEntity)
     }
 }
