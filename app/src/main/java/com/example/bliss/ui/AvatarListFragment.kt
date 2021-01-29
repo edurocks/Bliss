@@ -1,5 +1,6 @@
 package com.example.bliss.ui
 
+import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,10 @@ import com.example.bliss.database.entity.UserAvatar
 import com.example.bliss.databinding.FragmentAvatarListBinding
 import com.example.bliss.ui.adapters.UserAvatarAdapter
 import com.example.bliss.ui.viewModel.BlissViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class AvatarListFragment : Fragment(), UserAvatarAdapter.userAvatarRowClickListener {
 
     private val viewModel: BlissViewModel by viewModels()
@@ -20,8 +24,7 @@ class AvatarListFragment : Fragment(), UserAvatarAdapter.userAvatarRowClickListe
     private lateinit var userAvatarAdapter: UserAvatarAdapter
     private var gridLayoutManager: GridLayoutManager? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?
-                              ,savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAvatarListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -35,7 +38,7 @@ class AvatarListFragment : Fragment(), UserAvatarAdapter.userAvatarRowClickListe
 
     private fun observeResult() {
         viewModel.allAvatar.observe(viewLifecycleOwner, { userAvatarList ->
-            if (userAvatarList != null && userAvatarList.isNotEmpty()){
+            if (userAvatarList != null && userAvatarList.isNotEmpty()) {
                 userAvatarAdapter = UserAvatarAdapter(userAvatarList as ArrayList<UserAvatar>,
                         this)
                 binding.avatarRecyclerView.adapter = userAvatarAdapter
@@ -45,6 +48,7 @@ class AvatarListFragment : Fragment(), UserAvatarAdapter.userAvatarRowClickListe
 
     private fun initRecyclerView() {
         gridLayoutManager = GridLayoutManager(requireContext(), 4)
+        binding.avatarRecyclerView.setHasFixedSize(true)
         binding.avatarRecyclerView.layoutManager = gridLayoutManager
     }
 
@@ -54,6 +58,7 @@ class AvatarListFragment : Fragment(), UserAvatarAdapter.userAvatarRowClickListe
     }
 
     override fun onUserAvatarClickListener(position: Int, userAvatar: UserAvatar) {
+        userAvatarAdapter.removeAt(position)
         viewModel.deleteAvatar(userAvatar)
     }
 }

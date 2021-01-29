@@ -10,6 +10,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.net.ssl.HttpsURLConnection
 
+@Suppress("CAST_NEVER_SUCCEEDS")
 class BlissRepository @Inject constructor(private val blissInterface: BlissInterface,
                                           private val blissDao: BlissDao)
     : BlissRepositoryImpl {
@@ -24,9 +25,7 @@ class BlissRepository @Inject constructor(private val blissInterface: BlissInter
             withContext(Dispatchers.IO){
                 result.map {
                     val list = ArrayList<EmojiEntity>()
-                    val emoji = EmojiEntity()
-                    emoji.name = it.name
-                    emoji.url = it.url
+                    val emoji = EmojiEntity(it.name, it.url)
                     list.add(emoji)
                     insertEmojis(list)
                 }

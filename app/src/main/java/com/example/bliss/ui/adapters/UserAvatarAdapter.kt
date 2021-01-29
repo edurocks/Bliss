@@ -14,7 +14,9 @@ class UserAvatarAdapter (private val userAvatarList: ArrayList<UserAvatar>,
     class UserAvatarHolder(private val itemBinding: UserAvatarRowBinding)
         : RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(userAvatar: UserAvatar) {
-            Picasso.get().load(userAvatar.url).into(itemBinding.imageUserAvatar)
+            Picasso.get().load(userAvatar.url)
+                    .resize(200,200)
+                    .into(itemBinding.imageUserAvatar)
         }
     }
 
