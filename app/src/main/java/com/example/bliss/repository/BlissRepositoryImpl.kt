@@ -10,5 +10,6 @@ interface BlissRepositoryImpl {
     suspend fun insertAvatar(userAvatar: UserAvatar)
     suspend fun getEmojisFromDb() : List<EmojiEntity>
     suspend fun getAvatarFromDb(name : String) : UserAvatar
-
+    suspend fun getAllAvatars() : List<UserAvatar>
+    suspend fun deleteAvatar(userAvatar : UserAvatar)
 }

@@ -71,4 +71,8 @@ class BlissRepository @Inject constructor(private val blissInterface: BlissInter
 
         return userAvatar
     }
+
+    override suspend fun getAllAvatars(): List<UserAvatar> = blissDao.getAllAvatars()
+
+    override suspend fun deleteAvatar(userAvatar : UserAvatar) = blissDao.deleteAvatar(userAvatar)
 }
