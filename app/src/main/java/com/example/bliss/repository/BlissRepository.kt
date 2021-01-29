@@ -1,7 +1,5 @@
 package com.example.bliss.repository
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import com.example.bliss.database.dao.BlissDao
 import com.example.bliss.database.entity.EmojiEntity
 import com.example.bliss.model.Emoji

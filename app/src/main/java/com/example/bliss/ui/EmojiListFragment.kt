@@ -22,7 +22,7 @@ class EmojiListFragment : Fragment(), EmojiAdapter.emojiRowClickListener,
     private lateinit var emojiAdapter: EmojiAdapter
     private var gridLayoutManager: GridLayoutManager? = null
     private var emojiData : ArrayList<EmojiEntity>? = null
-    private var emojiDataOriginal : ArrayList<EmojiEntity> = arrayListOf()
+    private var emojiDataOriginal = arrayListOf<EmojiEntity>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
