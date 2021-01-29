@@ -2,6 +2,7 @@ package com.example.bliss.repository
 
 import com.example.bliss.database.dao.BlissDao
 import com.example.bliss.database.entity.EmojiEntity
+import com.example.bliss.database.entity.UserAvatar
 import com.example.bliss.model.Emoji
 import com.example.bliss.network.BlissInterface
 import kotlinx.coroutines.Dispatchers
@@ -9,6 +10,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.net.ssl.HttpsURLConnection
 
+@Suppress("CAST_NEVER_SUCCEEDS")
 class BlissRepository @Inject constructor(private val blissInterface: BlissInterface,
                                           private val blissDao: BlissDao)
     : BlissRepositoryImpl {
@@ -23,9 +25,7 @@ class BlissRepository @Inject constructor(private val blissInterface: BlissInter
             withContext(Dispatchers.IO){
                 result.map {
                     val list = ArrayList<EmojiEntity>()
-                    val emoji = EmojiEntity()
-                    emoji.name = it.name
-                    emoji.url = it.url
+                    val emoji = EmojiEntity(it.name, it.url)
                     list.add(emoji)
                     insertEmojis(list)
                 }
@@ -33,8 +33,22 @@ class BlissRepository @Inject constructor(private val blissInterface: BlissInter
         }
     }
 
+
+    override suspend fun getAvatar(name: String) {
+        val response = blissInterface.getUserAvatar(name)
+
+        if (response.isSuccessful && response.code() == HttpsURLConnection.HTTP_OK){
+            withContext(Dispatchers.IO){
+                insertAvatar(UserAvatar(response.body()!!.id, response.body()!!.url, name))
+            }
+        }
+     }
+
     override suspend fun insertEmojis(emojis: List<EmojiEntity>) =
         blissDao.insertEmojis(emojis)
+
+    override suspend fun insertAvatar(userAvatar: UserAvatar) =
+        blissDao.insertAvatar(userAvatar)
 
     override suspend fun getEmojisFromDb(): List<EmojiEntity> {
         val emojiData = blissDao.getEmojis()
@@ -43,4 +57,21 @@ class BlissRepository @Inject constructor(private val blissInterface: BlissInter
         }
         return emojiData
     }
+
+    override suspend fun getAvatarFromDb(name: String): UserAvatar {
+
+        val userAvatar = blissDao.getAvatar(name)
+
+        if (userAvatar == null){
+           getAvatar(name)
+        }else {
+            return userAvatar
+        }
+
+        return userAvatar
+    }
+
+    override suspend fun getAllAvatars(): List<UserAvatar> = blissDao.getAllAvatars()
+
+    override suspend fun deleteAvatar(userAvatar : UserAvatar) = blissDao.deleteAvatar(userAvatar)
 }

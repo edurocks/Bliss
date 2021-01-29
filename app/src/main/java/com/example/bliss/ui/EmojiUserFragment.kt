@@ -35,15 +35,19 @@ class EmojiUserFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         binding.emojiRandom.setOnClickListener(this)
         binding.emojiList.setOnClickListener(this)
+        binding.searchAvatar.setOnClickListener(this)
+        binding.avatarList.setOnClickListener(this)
+        binding.googleRepos.setOnClickListener(this)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.getEmojiFromDb()
-        observeResult()
+        observeEmojiResult()
+        observeUserAvatarResult()
     }
 
-    private fun observeResult() {
+    private fun observeEmojiResult() {
         viewModel.emojisList.observe(viewLifecycleOwner, { emojisList ->
             if(emojisList != null && emojisList.isNotEmpty()){
                 Picasso.get().load(emojisList[(emojisList.indices).random()].url)
@@ -53,11 +57,32 @@ class EmojiUserFragment : Fragment(), View.OnClickListener {
         })
     }
 
+    private fun observeUserAvatarResult() {
+        viewModel.userAvatar.observe(viewLifecycleOwner, { userAvatar ->
+            if (userAvatar != null){
+                Picasso.get().load(userAvatar.url).into(binding.emojiImage)
+            }
+        })
+    }
+
     override fun onClick(v: View?) {
         when(v?.id){
             binding.emojiRandom.id -> viewModel.getEmojiFromDb()
             binding.emojiList.id -> navigateToEmojiList()
+            binding.searchAvatar.id -> viewModel.getAvatar(binding.avatarName.text.toString())
+            binding.avatarList.id -> navigateToUserAvatarList()
+            binding.googleRepos.id -> navigateToGoogleReposList()
         }
+    }
+
+    private fun navigateToGoogleReposList() {
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_emojiUserFragment_to_googleReposFragment)
+    }
+
+    private fun navigateToUserAvatarList() {
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_emojiUserFragment_to_avatarListFragment)
     }
 
     private fun navigateToEmojiList() {

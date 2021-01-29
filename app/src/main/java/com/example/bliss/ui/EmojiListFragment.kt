@@ -54,6 +54,7 @@ class EmojiListFragment : Fragment(), EmojiAdapter.emojiRowClickListener,
 
     private fun initRecyclerView() {
         gridLayoutManager = GridLayoutManager(requireContext(), 4)
+        binding.emojiRecyclerView.setHasFixedSize(true)
         binding.emojiRecyclerView.layoutManager = gridLayoutManager
     }
 
