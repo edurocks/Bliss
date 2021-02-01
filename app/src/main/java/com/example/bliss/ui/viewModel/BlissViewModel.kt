@@ -5,14 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.bliss.database.entity.EmojiEntity
 import com.example.bliss.database.entity.UserAvatar
+import com.example.bliss.model.UserReposResponse
 import com.example.bliss.repository.BlissRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class BlissViewModel @ViewModelInject constructor(private val blissRepository: BlissRepository)
     : ViewModel() {
-
 
     private var _emojisListValue : MutableLiveData<List<EmojiEntity>> = MutableLiveData()
 
@@ -64,5 +67,10 @@ class BlissViewModel @ViewModelInject constructor(private val blissRepository: B
         viewModelScope.launch{
             blissRepository.deleteAvatar(userAvatar)
         }
+    }
+
+    fun getUserReposList() : Flow<PagingData<UserReposResponse>> {
+        return blissRepository.getUserRepos()
+                .cachedIn(scope = viewModelScope)
     }
 }

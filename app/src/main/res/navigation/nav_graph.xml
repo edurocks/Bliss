@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_avatar_list" />
     <fragment
         android:id="@+id/googleReposFragment"
-        android:name="com.example.bliss.ui.GoogleReposFragment"
+        android:name="com.example.bliss.ui.UserReposFragment"
         android:label="fragment_google_repos"
         tools:layout="@layout/fragment_google_repos" />
 </navigation>

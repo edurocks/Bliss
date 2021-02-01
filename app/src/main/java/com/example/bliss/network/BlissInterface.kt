@@ -18,5 +18,5 @@ interface BlissInterface {
 
     @GET("users/{name}/repos")
     suspend fun getUserRepos(@Path("name") name : String, @Query("page")  page : Int,
-                             @Query("size")  size : Int) : Response<UserReposResponse>
+                             @Query("size")  size : Int) : Response<List<UserReposResponse>>
 }
