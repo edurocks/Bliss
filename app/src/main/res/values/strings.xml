@@ -2,7 +2,7 @@
     <string name="app_name">Bliss</string>
     <string name="random_emoji">Random Emoji</string>
     <string name="emoji_list">Emoji List</string>
-    <string name="avatar_name">Digite Utilizador</string>
+    <string name="avatar_name">insert github username</string>
     <string name="avatar_list">Avatar List</string>
     <string name="google_repos">Google Repos</string>
 </resources>
