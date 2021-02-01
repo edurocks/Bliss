@@ -1,11 +1,17 @@
 package com.example.bliss.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.bliss.database.dao.BlissDao
 import com.example.bliss.database.entity.EmojiEntity
 import com.example.bliss.database.entity.UserAvatar
 import com.example.bliss.model.Emoji
+import com.example.bliss.model.UserReposResponse
 import com.example.bliss.network.BlissInterface
+import com.example.bliss.pagination.UserReposPagingSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.net.ssl.HttpsURLConnection
@@ -74,4 +80,12 @@ class BlissRepository @Inject constructor(private val blissInterface: BlissInter
     override suspend fun getAllAvatars(): List<UserAvatar> = blissDao.getAllAvatars()
 
     override suspend fun deleteAvatar(userAvatar : UserAvatar) = blissDao.deleteAvatar(userAvatar)
+
+    override fun getUserRepos(): Flow<PagingData<UserReposResponse>> {
+        return Pager(
+                config = PagingConfig(pageSize = 5, enablePlaceholders = false),
+                pagingSourceFactory = { UserReposPagingSource(blissInterface = blissInterface,
+                                                    "google") }
+        ).flow
+    }
 }
