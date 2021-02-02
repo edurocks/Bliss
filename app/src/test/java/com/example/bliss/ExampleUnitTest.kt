@@ -2,31 +2,24 @@ package com.example.bliss
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import androidx.lifecycle.asLiveData
-import androidx.paging.PagingData
 import com.example.bliss.database.entity.EmojiEntity
 import com.example.bliss.database.entity.UserAvatar
-import com.example.bliss.model.UserReposResponse
 import com.example.bliss.repository.BlissRepository
 import com.example.bliss.ui.viewModel.BlissViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.TestRule
-import java.util.concurrent.Flow
 
 /**
  * Example local unit test, which will execute on the development machine (host).
