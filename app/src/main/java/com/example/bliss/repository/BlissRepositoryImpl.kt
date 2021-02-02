@@ -16,5 +16,4 @@ interface BlissRepositoryImpl {
     suspend fun getAllAvatars() : List<UserAvatar>
     suspend fun deleteAvatar(userAvatar : UserAvatar)
     fun getUserRepos() : Flow<PagingData<UserReposResponse>>
-
 }

@@ -70,8 +70,6 @@ class BlissRepository @Inject constructor(private val blissInterface: BlissInter
 
         if (userAvatar == null){
            getAvatar(name)
-        }else {
-            return userAvatar
         }
 
         return userAvatar

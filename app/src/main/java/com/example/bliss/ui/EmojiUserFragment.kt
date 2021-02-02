@@ -78,7 +78,10 @@ class EmojiUserFragment : Fragment(), View.OnClickListener {
         when(v?.id){
             binding.emojiRandom.id -> viewModel.getEmojiFromDb()
             binding.emojiList.id -> navigateToEmojiList()
-            binding.searchAvatar.id -> viewModel.getAvatar(binding.avatarName.text.toString())
+            binding.searchAvatar.id -> {
+                viewModel.getAvatar(binding.avatarName.text.toString())
+                binding.avatarName.setText("")
+            }
             binding.avatarList.id -> navigateToUserAvatarList()
             binding.googleRepos.id -> navigateToGoogleReposList()
         }

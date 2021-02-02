@@ -43,12 +43,12 @@ class DatabaseInstrumentedTest {
     fun insertAvatarAndVerifyIfExists() {
         val userAvatar = UserAvatar()
         userAvatar.id = 1
-        userAvatar.name = "edurocks"
+        userAvatar.name = "blissapps"
         userAvatar.url = "avatars.githubusercontent.com/u/22355468?v=4"
 
         runBlocking {
             blissDao.insertAvatar(userAvatar)
-            val byName = blissDao.getAvatar("edurocks")
+            val byName = blissDao.getAvatar("blissapps")
             assertThat(byName, equalTo(userAvatar))
         }
     }
@@ -58,12 +58,12 @@ class DatabaseInstrumentedTest {
     fun deleteAvatarAndVerifyIfWasDeleted() {
         val userAvatar = UserAvatar()
         userAvatar.id = 1
-        userAvatar.name = "edurocks"
+        userAvatar.name = "blissapps"
         userAvatar.url = "avatars.githubusercontent.com/u/22355468?v=4"
 
         runBlocking {
             blissDao.deleteAvatar(userAvatar)
-            val byName = blissDao.getAvatar("edurocks")
+            val byName = blissDao.getAvatar("blissapps")
             assertThat(byName, equalTo(null))
         }
     }
