@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,6 +16,7 @@ import com.example.bliss.ui.viewModel.BlissViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class EmojiUserFragment : Fragment(), View.OnClickListener {
 
@@ -22,6 +24,13 @@ class EmojiUserFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentEmojiUserBinding? = null
     private val binding get() = _binding!!
     private var emojiList = arrayListOf<EmojiEntity>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
+                or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,9 +58,9 @@ class EmojiUserFragment : Fragment(), View.OnClickListener {
 
     private fun observeEmojiResult() {
         viewModel.emojisList.observe(viewLifecycleOwner, { emojisList ->
-            if(emojisList != null && emojisList.isNotEmpty()){
+            if (emojisList != null && emojisList.isNotEmpty()) {
                 Picasso.get().load(emojisList[(emojisList.indices).random()].url)
-                                .into(binding.emojiImage)
+                    .into(binding.emojiImage)
                 emojiList.addAll(emojisList)
             }
         })
@@ -59,7 +68,7 @@ class EmojiUserFragment : Fragment(), View.OnClickListener {
 
     private fun observeUserAvatarResult() {
         viewModel.userAvatar.observe(viewLifecycleOwner, { userAvatar ->
-            if (userAvatar != null){
+            if (userAvatar != null) {
                 Picasso.get().load(userAvatar.url).into(binding.emojiImage)
             }
         })
